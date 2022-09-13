@@ -147,7 +147,7 @@ class ArViewerViewManager : SimpleViewManager<ArViewerView>() {
    * Optional: Min scale
    */
   @ReactProp(name = "minScale")
-  fun setAllowScale(view: ArViewerView, minScale: Float) {
+  fun setMinScale(view: ArViewerView, minScale: Float) {
     if (minScale > 0) {
       view.setMinScale(minScale)
     }
@@ -156,7 +156,7 @@ class ArViewerViewManager : SimpleViewManager<ArViewerView>() {
    * Optional: Max scale
    */
   @ReactProp(name = "maxScale")
-  fun setAllowScale(view: ArViewerView, maxScale: Float) {
+  fun setMaxScale(view: ArViewerView, maxScale: Float) {
     if (maxScale > 0) {
       view.setMaxScale(maxScale)
     }
