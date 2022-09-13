@@ -128,6 +128,9 @@ class ArViewerView @JvmOverloads constructor(
    */
   private var allowTransform = mutableSetOf<String>()
 
+  private var minScale: Float = 0.1f
+  private var maxScale: Float = 2f
+
   init {
     if (checkIsSupportedDevice(context.currentActivity!!)) {
       // check AR Core installation
@@ -536,6 +539,7 @@ class ArViewerView @JvmOverloads constructor(
 
           // set transforms on model
           onTransformChanged()
+          onScaleChanged()
         }
         .exceptionally {
           Log.e("ARview model", "cannot load")
@@ -584,14 +588,16 @@ class ArViewerView @JvmOverloads constructor(
    */
   fun setMinScale(min: Float = 0.1f) {
     if (modelNode == null) return
-    modelNode!!.scaleController.setMinScale(min)
+    minScale = min
+    onScaleChanged()
   }
   /**
    * Set min max scale for model
    */
   fun setMaxScale(max: Float = 5f) {
     if (modelNode == null) return
-    modelNode!!.scaleController.setMaxScale(max)
+    maxScale = max
+    onScaleChanged()
   }
 
   private fun onTransformChanged() {
@@ -599,6 +605,13 @@ class ArViewerView @JvmOverloads constructor(
     modelNode!!.scaleController.isEnabled = allowTransform.contains("scale")
     modelNode!!.rotationController.isEnabled = allowTransform.contains("rotate")
     modelNode!!.translationController.isEnabled = allowTransform.contains("translate")
+    
+  }
+
+  private fun onScaleChanged(){
+    if (modelNode == null) return
+    modelNode!!.scaleController.setMinScale(minScale)
+    modelNode!!.scaleController.setMaxScale(maxScale)
   }
 
   /**

@@ -30,9 +30,10 @@ type ArViewerProps = {
   model: string;
   planeOrientation?: 'none' | 'vertical' | 'horizontal' | 'both';
   allowScale?: boolean;
-  defaultScale?: number;
-  minScale?: number;
-  maxScale?: number;
+  scale?: {
+    min?: number;
+    max?: number;
+  };
   allowRotate?: boolean;
   allowTranslate?: boolean;
   lightEstimation?: boolean;
@@ -61,11 +62,14 @@ type ArViewUIManager = UIManager & {
   ArViewerView: UIManagerArViewer;
 };
 
-type ArInnerViewProps = Omit<
+type ArInnerViewProps = Omit<ArViewerProps, 'scale'> & {
+  minScale?: number;
+  maxScale?: number;
+};
+type ArUserViewProps = Omit<
   ArViewerProps,
   'onDataReturned' | 'ref' | 'onError'
 >;
-
 type ArInnerViewState = {
   cameraPermission: boolean;
 };
@@ -74,15 +78,12 @@ const ComponentName = 'ArViewerView';
 
 const ArViewerComponent =
   UIManager.getViewManagerConfig(ComponentName) != null
-    ? requireNativeComponent<ArViewerProps>(ComponentName)
+    ? requireNativeComponent<ArInnerViewProps>(ComponentName)
     : () => {
         throw new Error(LINKING_ERROR);
       };
 
-export class ArViewerView extends Component<
-  ArInnerViewProps,
-  ArInnerViewState
-> {
+export class ArViewerView extends Component<ArUserViewProps, ArInnerViewState> {
   // We need to keep track of all running requests, so we store a counter.
   private _nextRequestId = 1;
   // We also need to keep track of all the promises we created so we can
@@ -205,13 +206,16 @@ export class ArViewerView extends Component<
   }
 
   render() {
+    const { scale, ...rest } = this.props;
     return (
       this.state.cameraPermission && (
         <ArViewerComponent
           ref={this.nativeRef}
           onDataReturned={this._onDataReturned}
           onError={this._onError}
-          {...this.props}
+          minScale={scale?.min}
+          maxScale={scale?.max}
+          {...rest}
         />
       )
     );
