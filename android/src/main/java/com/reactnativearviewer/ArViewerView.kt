@@ -460,10 +460,10 @@ class ArViewerView @JvmOverloads constructor(
   }
 
   private fun updateLightEstimation(config: Config?) {
-    if(!isLightEstimationEnabled) {
-      config?.lightEstimationMode = Config.LightEstimationMode.DISABLED
-    } else {
+    if(isLightEstimationEnabled) {
       config?.lightEstimationMode = Config.LightEstimationMode.AMBIENT_INTENSITY
+    } else {
+      config?.lightEstimationMode = Config.LightEstimationMode.DISABLED
     }
   }
 
@@ -531,6 +531,9 @@ class ArViewerView @JvmOverloads constructor(
             val center = asset!!.boundingBox.center.let { v -> Float3(v[0], v[1], v[2]) }
             val halfExtent = asset.boundingBox.halfExtent.let { v -> Float3(v[0], v[1], v[2]) }
             val fCenter = -(center + halfExtent * Float3(0f, -1f, 1f)) * Float3(1f, 1f, 1f)
+            println(fCenter.x)
+            println(fCenter.y)
+            println(fCenter.z)
             modelNode!!.localPosition = Vector3(fCenter.x, fCenter.y, fCenter.z)
           }
 
