@@ -579,6 +579,21 @@ class ArViewerView @JvmOverloads constructor(
     onTransformChanged()
   }
 
+  /**
+   * Set min max scale for model
+   */
+  fun setMinScale(min: Float = 0.1) {
+    if (modelNode == null) return
+    modelNode!!.scaleController.setMinScale(min)
+  }
+  /**
+   * Set min max scale for model
+   */
+  fun setMaxScale(max: Float = 5) {
+    if (modelNode == null) return
+    modelNode!!.scaleController.setMaxScale(max)
+  }
+
   private fun onTransformChanged() {
     if (modelNode == null) return
     modelNode!!.scaleController.isEnabled = allowTransform.contains("scale")

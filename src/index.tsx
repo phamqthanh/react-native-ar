@@ -30,6 +30,9 @@ type ArViewerProps = {
   model: string;
   planeOrientation?: 'none' | 'vertical' | 'horizontal' | 'both';
   allowScale?: boolean;
+  defaultScale?: number;
+  minScale?: number;
+  maxScale?: number;
   allowRotate?: boolean;
   allowTranslate?: boolean;
   lightEstimation?: boolean;
@@ -114,7 +117,9 @@ export class ArViewerView extends Component<
             this.setState({ cameraPermission: true });
           } else {
             this._onError({
-              nativeEvent: { message: 'Cannot start without camera permission' },
+              nativeEvent: {
+                message: 'Cannot start without camera permission',
+              },
             } as ArErrorEvent);
           }
         }

@@ -144,6 +144,25 @@ class ArViewerViewManager : SimpleViewManager<ArViewerView>() {
   }
 
   /**
+   * Optional: Min scale
+   */
+  @ReactProp(name = "minScale")
+  fun setAllowScale(view: ArViewerView, minScale: Float) {
+    if (minScale) {
+      view.setMinScale(minScale)
+    }
+  }
+  /**
+   * Optional: Max scale
+   */
+  @ReactProp(name = "maxScale")
+  fun setAllowScale(view: ArViewerView, maxScale: Float) {
+    if (maxScale) {
+      view.setMaxScale(maxScale)
+    }
+  }
+
+  /**
    * Optional: allow user to translate the model
    */
   @ReactProp(name = "allowTranslate")

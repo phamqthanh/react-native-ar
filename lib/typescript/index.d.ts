@@ -13,6 +13,9 @@ declare type ArViewerProps = {
     model: string;
     planeOrientation?: 'none' | 'vertical' | 'horizontal' | 'both';
     allowScale?: boolean;
+    defaultScale?: number;
+    minScale?: number;
+    maxScale?: number;
     allowRotate?: boolean;
     allowTranslate?: boolean;
     lightEstimation?: boolean;
