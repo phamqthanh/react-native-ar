@@ -13,12 +13,14 @@ class RealityKitViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        // pause session on view disappear
-        arView.pause()
-        arView.session.delegate = nil
-        arView.scene.anchors.removeAll()
-        arView.removeFromSuperview()
-        arView = nil
+        if (arView != nil) {
+          // pause session on view disappear
+          arView.pause()
+          arView.session.delegate = nil
+          arView.scene.anchors.removeAll()
+          arView.removeFromSuperview()
+          arView = nil
+        }
     }
     
     func setUp() {
