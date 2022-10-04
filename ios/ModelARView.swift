@@ -179,6 +179,12 @@ class ModelARView: ARView, ARSessionDelegate {
     }
     func startingRecord(options: NSDictionary, callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
       var fileType = AVFileType.mov
+      let callback = Callback(jsCallbackFunc)
+
+      guard let tempFilePath = RCTTempFilePath(fileExtension, errorPointer) else {
+        callback.reject(error: "Failed to create a temporary file!", cause: errorPointer?.pointee)
+        return
+      }
 
       let tempURL = URL(string: "file://\(tempFilePath)")!
       print(tempURL)
