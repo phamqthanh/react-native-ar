@@ -178,6 +178,40 @@ export class ArViewerView extends Component<ArUserViewProps, ArInnerViewState> {
       );
     return promise;
   }
+  /**
+   *
+   */
+  startRecording(options: {
+    onRecordingError(error: Error): any;
+    onRecordingFinished(video: any): any;
+    flash?: boolean;
+  }) {
+    const { onRecordingError, onRecordingFinished, ...passThroughOptions } =
+      options;
+    if (
+      typeof onRecordingError !== 'function' ||
+      typeof onRecordingFinished !== 'function'
+    )
+      throw new Error('Missing onRecoringErro or onRecordingFinished');
+
+    const onRecordCallback = (video: any, error: Error) => {
+      if (error != null) return onRecordingError(error);
+      if (video != null) return onRecordingFinished(video);
+    }; // TODO: Use TurboModules to either make this a sync invokation, or make it async.
+
+    try {
+      this.nativeRef.current &&
+        UIManager.dispatchViewManagerCommand(
+          findNodeHandle(this.nativeRef.current as unknown as number),
+          (UIManager as ArViewUIManager)[ComponentName].Commands.takeScreenshot,
+          [passThroughOptions, onRecordCallback]
+        );
+    } catch (e) {
+      throw e;
+      // throw new Error('Missing onRecoringErro or onRecordingFinished');
+      // throw (0, _CameraError.tryParseNativeCameraError)(e);
+    }
+  }
 
   /**
    * Reset the model positionning

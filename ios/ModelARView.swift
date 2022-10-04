@@ -177,6 +177,13 @@ class ModelARView: ARView, ARSessionDelegate {
             }
         }
     }
+    func startingRecord(options: NSDictionary, callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
+      var fileType = AVFileType.mov
+
+      let tempURL = URL(string: "file://\(tempFilePath)")!
+      print(tempURL)
+      return tempURL
+    }
     
     /// Change the model to render
     func changeEntity(modelEntity: Entity) {

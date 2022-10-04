@@ -4,6 +4,10 @@ class ArViewerView: UIView {
 
     var arViewController: RealityKitViewController!
 
+    internal let cameraQueue = ArViewerCameraQueues.cameraQueue
+    internal let videoQueue = ArViewerCameraQueues.videoQueue
+    internal let audioQueue = ArViewerCameraQueues.audioQueue
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -71,6 +75,12 @@ class ArViewerView: UIView {
     // take a snapshot
     @objc func takeScreenshot(requestId: Int) -> Void {
         arViewController?.arView.takeSnapshot(requestId: requestId)
+    }
+
+    // start record video
+    @obj
+    func startRecording(options: NSDictionary, onRecordCallback: @escaping RCTResponseSenderBlock) {
+      arViewController?.arView.startingRecord(options, onRecordCallback)
     }
     
     // rotate model
