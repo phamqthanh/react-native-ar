@@ -183,7 +183,7 @@ class ModelARView: ARView, ARSessionDelegate {
       var fileType = AVFileType.mov
       if let fileTypeOption = options["fileType"] as? String {
         guard let parsed = try? AVFileType(withString: fileTypeOption) else {
-          callback.reject(error: .parameter(.invalid(unionName: "fileType", receivedValue: fileTypeOption)))
+          callback.reject(error: "invalid-parameter")
           return
         }
         fileType = parsed
@@ -198,7 +198,7 @@ class ModelARView: ARView, ARSessionDelegate {
 
       let tempURL = URL(string: "file://\(tempFilePath)")!
       print(tempURL)
-      return tempURL
+      return
     }
     
     /// Change the model to render

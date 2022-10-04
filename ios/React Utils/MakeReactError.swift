@@ -8,7 +8,7 @@
 
 import Foundation
 
-func makeReactError(_ cameraError: Any, cause: NSError?) -> [String: Any] {
+func makeReactError(_ cameraError: String, cause: NSError?) -> [String: Any] {
   var causeDictionary: [String: Any]?
   if let cause = cause {
     causeDictionary = RCTMakeError(cameraError, nil, cause.userInfo)
@@ -20,6 +20,6 @@ func makeReactError(_ cameraError: Any, cause: NSError?) -> [String: Any] {
   )
 }
 
-func makeReactError(_ cameraError: CameraError) -> [String: Any] {
+func makeReactError(_ cameraError: String) -> [String: Any] {
   return makeReactError(cameraError, cause: nil)
 }
