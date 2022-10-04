@@ -19,14 +19,14 @@ class Callback {
     self.callback = callback
   }
 
-  func reject(error: Any, cause: NSError?) {
+  func reject(error: String, cause: NSError?) {
     guard !hasCalled else { return }
 
     callback([NSNull(), makeReactError(error, cause: cause)])
     hasCalled = true
   }
 
-  func reject(error: Any) {
+  func reject(error: String) {
     guard !hasCalled else { return }
 
     reject(error: error, cause: nil)

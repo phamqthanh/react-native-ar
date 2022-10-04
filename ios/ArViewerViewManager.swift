@@ -33,7 +33,7 @@ class ArViewerViewManager: RCTViewManager {
     final func startRecording(_ node: NSNumber, options: NSDictionary, onRecordCallback: @escaping RCTResponseSenderBlock) {
       RCTExecuteOnMainQueue {
             if let view = self.bridge.uiManager.view(forReactTag: node) as? ArViewerView {
-                view.startRecording(options: options, callback: onRecordCallback)
+                view.startRecording(options: options, onRecordCallback: onRecordCallback)
             }
         }
     }

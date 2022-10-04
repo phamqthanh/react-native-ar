@@ -78,9 +78,8 @@ class ArViewerView: UIView {
     }
 
     // start record video
-    @obj
-    func startRecording(options: NSDictionary, onRecordCallback: @escaping RCTResponseSenderBlock) {
-      arViewController?.arView.startingRecord(options, onRecordCallback)
+    @obj func startRecording(options: NSDictionary, onRecordCallback: @escaping RCTResponseSenderBlock) {
+      arViewController?.arView.startingRecord(options: options, callback: onRecordCallback)
     }
     
     // rotate model
