@@ -177,7 +177,7 @@ class ModelARView: ARView, ARSessionDelegate {
             }
         }
     }
-    func startingRecord(options: NSDictionary, callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
+    func startRecording(options: NSDictionary, callback jsCallbackFunc: @escaping RCTResponseSenderBlock) {
       let callback = Callback(jsCallbackFunc)
 
       var fileType = AVFileType.mov

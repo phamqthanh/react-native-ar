@@ -55,6 +55,7 @@ type UIManagerArViewer = {
     takeScreenshot: number;
     reset: number;
     rotateModel: number;
+    startRecording: number;
   };
 };
 
@@ -107,6 +108,19 @@ export class ArViewerView extends Component<ArUserViewProps, ArInnerViewState> {
     // bind methods to current context
     this._onDataReturned = this._onDataReturned.bind(this);
     this._onError = this._onError.bind(this);
+  }
+
+  private get handle(): number | null {
+    const nodeHandle = findNodeHandle(
+      this.nativeRef.current as unknown as number
+    );
+    if (nodeHandle == null || nodeHandle === -1) {
+      throw new Error(
+        "Could not get the Camera's native view tag! Does the Camera View exist in the native view-tree?"
+      );
+    }
+
+    return nodeHandle;
   }
 
   componentDidMount() {
@@ -202,8 +216,8 @@ export class ArViewerView extends Component<ArUserViewProps, ArInnerViewState> {
     try {
       this.nativeRef.current &&
         UIManager.dispatchViewManagerCommand(
-          findNodeHandle(this.nativeRef.current as unknown as number),
-          (UIManager as ArViewUIManager)[ComponentName].Commands.takeScreenshot,
+          this.handle,
+          (UIManager as ArViewUIManager)[ComponentName].Commands.startRecording,
           [passThroughOptions, onRecordCallback]
         );
     } catch (e) {
