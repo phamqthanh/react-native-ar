@@ -181,16 +181,17 @@ class ModelARView: ARView, ARSessionDelegate {
       let callback = Callback(jsCallbackFunc)
 
       var fileType = AVFileType.mov
-      if let fileTypeOption = options["fileType"] as? String {
-        guard let parsed = try? AVFileType(withString: fileTypeOption) else {
-          callback.reject(error: "invalid-parameter")
-          return
-        }
-        fileType = parsed
-      }
+      // if let fileTypeOption = options["fileType"] as? String {
+      //   guard let parsed = try? AVFileType(withString: fileTypeOption) else {
+      //     callback.reject(error: "invalid-parameter")
+      //     return
+      //   }
+      //   fileType = parsed
+      // }
 
       let errorPointer = ErrorPointer(nilLiteral: ())
-      let fileExtension = fileType.descriptor ?? "mov"
+      // let fileExtension = fileType.descriptor ?? "mov"
+      let fileExtension = "mov"
       guard let tempFilePath = RCTTempFilePath(fileExtension, errorPointer) else {
         callback.reject(error: "Failed to create a temporary file!", cause: errorPointer?.pointee)
         return
